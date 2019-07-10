@@ -80,4 +80,4 @@ python test.py --port XXXX
 ```
 
 The result should look something like this:
-[Screen capture](example.mov)
+[screen capture of instrument-server and test.py](https://cloud.rs-us.net/index.php/s/23nM0gASIfGl5cA/download)
