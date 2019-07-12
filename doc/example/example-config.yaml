@@ -1,5 +1,7 @@
 plugins:
   is_znb_plugin: {}
+  passthru_plugin:
+    device: znb
 devices:
   znb:
     type:         socket
