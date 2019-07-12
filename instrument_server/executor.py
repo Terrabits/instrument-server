@@ -35,9 +35,9 @@ class Executor(object):
             return
         for name, config in plugin_list.items():
             if instrument_server.command.register_plugin(name, config):
-                return True
+                continue
             if instrument_server.device.register_plugin(name):
-                return True
+                continue
             # else
             raise ImportError(f"Error importing plugin '{name}'")
     def _process_commands(self, commands):
