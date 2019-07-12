@@ -59,7 +59,10 @@ class Handler(asyncore.dispatcher_with_send):
                     print(command.decode())
                 return_value = self.executor.execute(command)
                 if return_value:
-                    self.send(f'{return_value}'.encode() + self.termination)
+                    if type(return_value) == bytes:
+                        self.send(return_value + self.termination)
+                    else:
+                        self.send(f'{return_value}'.encode() + self.termination)
             except CommandError as error:
                 print(error)
             except DeviceError as error:
