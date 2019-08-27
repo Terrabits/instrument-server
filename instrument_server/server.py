@@ -58,7 +58,7 @@ class Handler(asyncore.dispatcher_with_send):
                 if self.debug_mode:
                     print(command.decode())
                 return_value = self.executor.execute(command)
-                if return_value:
+                if return_value != None:
                     if type(return_value) == bytes:
                         self.send(return_value + self.termination)
                     else:
