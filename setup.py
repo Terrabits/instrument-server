@@ -10,7 +10,7 @@ setup(
     url='http://path-to-my-packagename',
     py_modules=['instrument_server'],
     packages=find_packages(exclude=['test']),
-    install_requires=['ruamel.yaml>=0.15.85<1.0', 'pyvisa>=1.9.1<2.0'],
+    install_requires=['ruamel.yaml>=0.15.85<1.0', 'pyvisa>=1.9.1<2.0', 'websockets>=8.0.2<9.0'],
     extras_require={
     'dev':  ['ddt>=1.2.0<2.0'],
     'test': ['ddt>=1.2.0<2.0']

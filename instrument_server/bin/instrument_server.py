@@ -18,6 +18,7 @@ def main():
     sys.path.insert(0, os.getcwd())
     sys.path.insert(0, config_path)
     instrument_server.run(**args.__dict__)
+    sys.exit(0)
 
 if __name__ == '__main__':
     main()
