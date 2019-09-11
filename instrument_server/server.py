@@ -30,7 +30,7 @@ class Server:
         server = Server(*args, **kwargs)
         signal.signal(signal.SIGTERM, sys_exit)
         try:
-            start_server = websockets.serve(server.accept_connection, server.address, server.port)
+            start_server = websockets.serve(server.accept_connection, server.address, server.port, ping_timeout=None)
             asyncio.get_event_loop().run_until_complete(start_server)
 
             sockname = start_server.ws_server.server.sockets[0].getsockname()
