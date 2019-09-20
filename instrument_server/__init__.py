@@ -1,2 +1,1 @@
-from instrument_server.server      import Server
-run = Server.run
+from .instrument_server import run
