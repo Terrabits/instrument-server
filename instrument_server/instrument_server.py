@@ -14,17 +14,15 @@ def create_handler(server):
     return handler
 
 def run(address='0.0.0.0', port=None, *args, **kwargs):
-    server  = Server(*args, **kwargs)
-    handler = create_handler(server)
-    loop    = asyncio.get_event_loop()
-    tcp_server    = loop.run_until_complete(start_server(handler, address, port))
-    address, port = tcp_server.sockets[0].getsockname()
-    print(f'Running on {address}:{port}...')
+    async def main():
+        server       = Server(*args, **kwargs)
+        handler      = create_handler(server)
+        tcp_server   = await start_server(handler, address, port)
+        _addr, _port = tcp_server.sockets[0].getsockname()
+        print(f'Running on {_addr}:{_port}...')
+        async with tcp_server:
+            await tcp_server.serve_forever()
     try:
-        loop.run_forever()
+        asyncio.run(main())
     except KeyboardInterrupt:
         pass
-    finally:
-        tcp_server.close()
-        loop.run_until_complete(tcp_server.wait_closed())
-        loop.close()
