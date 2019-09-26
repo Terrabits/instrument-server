@@ -31,23 +31,13 @@ def get_plugin_pair(module):
     assert is_plugin(module)
     return module.plugin_name, module.plugin
 
-def py_files_in_path(path):
-    return [i for i in path.iterdir() if i.is_file() and i.suffix == '.py']
-def find_device_plugins():
-    device_plugin_path = Path(__file__).parent
-    py_files = py_files_in_path(device_plugin_path)
-    for py_file in py_files:
-        if str(py_file) == __file__:
-            continue
-        try:
-            module_name = str(py_file.name[:-3])
-            module = import_module(f'.{module_name}', 'instrument_server.device')
-            register_plugin(module)
-        except:
-            continue
+# plugins
+plugins = dict()
 
-try:
-    plugins
-except:
-    plugins = dict()
-    find_device_plugins()
+# std plugins
+## type: socket
+import instrument_server.device.socket
+register_plugin('instrument_server.device.socket')
+## type: visa
+import instrument_server.device.visa
+register_plugin('instrument_server.device.visa')

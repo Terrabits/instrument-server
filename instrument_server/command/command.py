@@ -1,6 +1,6 @@
-from   importlib                        import import_module
-from   pathlib                          import Path
-from   instrument_server.command.delay_plugin import DelayPlugin
+from   .delay_plugin import DelayPlugin
+from   importlib     import import_module
+from   pathlib       import Path
 
 class CommandError(Exception):
     pass
@@ -33,7 +33,7 @@ def get_plugin_pair(module):
 
 def py_files_in_path(path):
     return [i for i in path.iterdir() if i.is_file() and i.suffix == '.py']
-def find_device_plugins():
+def find_command_plugins():
     device_plugin_path = Path(__file__).parent
     py_files = py_files_in_path(device_plugin_path)
     for py_file in py_files:
@@ -46,8 +46,10 @@ def find_device_plugins():
         except:
             continue
 
-try:
-    plugins
-except:
-    plugins = list()
-    find_device_plugins()
+# plugins
+plugins = list()
+
+# std plugins
+## __quit__
+import instrument_server.command.quit
+register_plugin('instrument_server.command.quit')
