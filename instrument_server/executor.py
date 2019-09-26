@@ -2,7 +2,8 @@ import instrument_server
 from   instrument_server.command import            Translation
 from   instrument_server.command import plugins as command_plugins
 from   instrument_server.device  import plugins as device_plugins
-from   ruamel              import            yaml
+from   pathlib                   import Path
+from   ruamel                    import yaml
 import sys
 
 class CommandNotFoundError(LookupError):
@@ -14,6 +15,8 @@ class Executor(object):
         self.debug_mode      = debug_mode
         with open(config_filename, 'r') as f:
             config = yaml.safe_load(f.read())
+        config_path = Path(config_filename).resolve().parent
+        sys.path.insert(0, str(config_path))
         self._process_plugins(config.pop('plugins'))
         self._connect_devices(config.pop('devices'))
         self._process_commands(config)
