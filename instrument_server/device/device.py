@@ -12,7 +12,9 @@ def register_plugin(module):
             return False
         name, plugin = get_plugin_pair(module)
         name = name.strip().lower()
-        assert not name in plugins
+        if name in plugins:
+            # alert on potential overwrite
+            assert plugins[name] == plugin
         plugins[name] = plugin
         return True
     except:

@@ -11,8 +11,7 @@ def register_plugin(module, config={}):
             module = import_module(module)
         if not is_plugin(module):
             return False
-        assert not module.plugin in plugins
-        if not module.plugin in plugins:
+        if not module.plugin in [i.plugin for i in plugins]:
             plugins.append(DelayPlugin(module.plugin, **config))
         return True
     except:
