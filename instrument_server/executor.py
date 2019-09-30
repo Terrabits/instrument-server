@@ -10,16 +10,19 @@ class CommandNotFoundError(LookupError):
     pass
 
 class Executor(object):
-    def __init__(self, config_filename, debug_mode=False):
-        self.config_filename = config_filename
-        self.debug_mode      = debug_mode
-        with open(config_filename, 'r') as f:
-            config = yaml.safe_load(f.read())
-        config_path = Path(config_filename).resolve().parent
-        sys.path.insert(0, str(config_path))
-        self._process_plugins(config.pop('plugins'))
-        self._connect_devices(config.pop('devices'))
-        self._process_commands(config)
+    def __init__(self, config, debug_mode=False):
+        self.config     = config
+        self.debug_mode = debug_mode
+        if type(config) == str:
+            # config is filename
+            self.config_filename = config
+            config_path = Path(self.config_filename).resolve().parent
+            sys.path.insert(0, str(config_path))
+            with open(self.config_filename, 'r') as f:
+                self.config = yaml.safe_load(f.read())
+        self._process_plugins (self.config.pop('plugins'))
+        self._connect_devices (self.config.pop('devices'))
+        self._process_commands(self.config)
     def execute(self, received_command):
         for command in self.commands:
             if command.is_match(received_command):

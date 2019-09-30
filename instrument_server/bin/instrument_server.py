@@ -20,6 +20,8 @@ def main():
     address = args.address
     port    = args.port
     kwargs  = args.__dict__
+    kwargs['config'] = kwargs['config_filename']
+    del(kwargs['config_filename'])
     del(kwargs['address'])
     del(kwargs['port'])
     instrument_server.run(address, port, **kwargs)

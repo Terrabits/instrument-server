@@ -4,12 +4,12 @@ from   instrument_server.executor import CommandNotFoundError, Executor
 from   instrument_server.parser   import Parser
 
 class Server:
-    def __init__(self, config_filename, termination=b'\n', debug_mode=False):
-        self.config_filename = config_filename
-        self.debug_mode      = debug_mode
-        self.termination     = termination
+    def __init__(self, config, termination=b'\n', debug_mode=False):
+        self.config      = config
+        self.debug_mode  = debug_mode
+        self.termination = termination
         # executor
-        self.executor = Executor(config_filename, debug_mode)
+        self.executor = Executor(config, debug_mode)
 
     def new_connection(self):
         return Handler(self.executor, self.termination, self.debug_mode)
