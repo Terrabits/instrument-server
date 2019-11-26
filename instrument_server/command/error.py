@@ -1,5 +1,5 @@
 from .base  import Base
-from .mixin import ParserMixin
+from .mixin import ErrorQueueMixin, ParserMixin
 
 class Error(ErrorQueueMixin, ParserMixin, Base):
     def __init__(self, devices, state, **settings):
@@ -17,3 +17,8 @@ class Error(ErrorQueueMixin, ParserMixin, Base):
         prev_errors = self.error_queue
         self.error_queue.clear()
         return prev_errors
+
+# # Declare as device plugin
+# # for auto-import
+IS_COMMAND_PLUGIN = True
+plugin            = Error

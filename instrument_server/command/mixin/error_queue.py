@@ -1,6 +1,6 @@
 class ErrorQueueMixin(object):
     def __init__(self):
-        if not 'error queue' in self.state:
+        if not '__errors__' in self.state:
             self.state['__errors__'] = list()
 
     @property

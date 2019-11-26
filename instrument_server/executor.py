@@ -55,7 +55,7 @@ class Executor(object):
         if not plugin_list:
             return
         for name, settings in plugin_list.items():
-            if instrument_server.command.register_plugin(name, state, settings):
+            if instrument_server.command.register_plugin(name, settings):
                 continue
             if instrument_server.device.register_plugin(name):
                 continue
@@ -68,5 +68,5 @@ class Executor(object):
             translation_commands.append(command)
         self.commands += translation_commands
     def _process_command_plugins(self):
-        plugin_commands = [plugin(self.devices) for plugin in instrument_server.command.plugins]
+        plugin_commands = [plugin(self.devices, self.state) for plugin in instrument_server.command.plugins]
         self.commands += plugin_commands

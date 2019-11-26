@@ -50,6 +50,7 @@ plugins = list()
 
 # std plugins
 ## __quit__
+import instrument_server.command.error
 import instrument_server.command.quit
 register_plugin('instrument_server.command.error')
 register_plugin('instrument_server.command.quit')

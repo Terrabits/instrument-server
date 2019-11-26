@@ -3,6 +3,8 @@ from   instrument_server.device   import DeviceError
 from   instrument_server.executor import CommandNotFoundError, Executor
 from   instrument_server.parser   import Parser
 
+known_exceptions = (CommandError, DeviceError, CommandNotFoundError)
+
 class Server:
     def __init__(self, config, termination=b'\n', debug_mode=False):
         self.config      = config
@@ -34,12 +36,10 @@ class Handler:
                         await send_fn(return_value + self.termination)
                     else:
                         await send_fn(f'{return_value}'.encode() + self.termination)
-            except CommandError as error:
+            except known_exceptions as error:
                 print(error)
-            except DeviceError as error:
-                print(error)
-            except CommandNotFoundError as error:
-                print(error)
+                self.executor.state['__errors__'].append(error)
             except Exception as error:
                 print(error)
+                raise
             command = self.parser.next_command()
