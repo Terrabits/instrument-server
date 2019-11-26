@@ -1,14 +1,19 @@
-from instrument_server.command import Base
+from .base  import Base
+from .mixin import ParserMixin
 import sys
 
-class Quit(Base):
-    def is_match(self, received_command):
-        return received_command.strip().lower() == b'__quit__'
-    def execute(self, received_command):
-        sys.exit(0)
+class Quit(ParserMixin, Base):
+    def __init__(self, devices, state, **settings):
+        Base       .__init__(self, devices, state, **settings)
+        ParserMixin.__init__(self, command="__quit__")
+
     @property
     def help_str(self):
         return '__quit__: Shutdown server'
+
+    def execute(self, received_command):
+        sys.exit(0)
+
 
 # # Declare as device plugin
 # # for auto-import
