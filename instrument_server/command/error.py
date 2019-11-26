@@ -1,5 +1,6 @@
 from .base  import Base
 from .mixin import ErrorQueueMixin, ParserMixin
+import json
 
 class Error(ErrorQueueMixin, ParserMixin, Base):
     def __init__(self, devices, state, **settings):
@@ -16,7 +17,7 @@ class Error(ErrorQueueMixin, ParserMixin, Base):
         args = self.args(received_command)
         prev_errors = self.error_queue.copy()
         self.error_queue.clear()
-        return prev_errors
+        return json.dumps(prev_errors)
 
 # # Declare as device plugin
 # # for auto-import
