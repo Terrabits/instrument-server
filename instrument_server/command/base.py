@@ -2,8 +2,9 @@
 # See below class definition.
 
 class Base(object):
-    def __init__(self, devices, **settings):
+    def __init__(self, devices, state, **settings):
         self.devices  = devices
+        self.state    = state
         self.settings = settings
     def is_match(self, received_command):
         return False

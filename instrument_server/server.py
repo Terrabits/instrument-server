@@ -40,4 +40,6 @@ class Handler:
                 print(error)
             except CommandNotFoundError as error:
                 print(error)
+            except Exception as error:
+                print(error)
             command = self.parser.next_command()
