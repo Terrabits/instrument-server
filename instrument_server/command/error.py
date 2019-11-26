@@ -14,8 +14,11 @@ class Error(ErrorQueueMixin, ParserMixin, Base):
         return 'Returns errors currently in queue:\n `errors?`'
 
     def execute(self, received_command):
+        # enforce syntax
         args = self.args(received_command)
-        prev_errors = self.error_queue.copy()
+
+        # process errors into strings
+        prev_errors = [str(i) for i in self.error_queue]
         self.error_queue.clear()
         return json.dumps(prev_errors)
 
