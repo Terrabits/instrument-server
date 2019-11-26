@@ -14,7 +14,7 @@ class Error(ErrorQueueMixin, ParserMixin, Base):
 
     def execute(self, received_command):
         args = self.args(received_command)
-        prev_errors = self.error_queue
+        prev_errors = self.error_queue.copy()
         self.error_queue.clear()
         return prev_errors
 
