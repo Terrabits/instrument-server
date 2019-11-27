@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='instrument-server',
-    version='1.3.3',
+    version='1.3.4',
     description='TCP server for controlling multiple instruments with a simplified SCPI interface',
     long_description=open('README.md').read().strip(),
     author='Nick Lalic',
