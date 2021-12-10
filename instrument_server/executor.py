@@ -37,7 +37,7 @@ class Executor(object):
             self.config = config
     def _load_config_from_filename(self, filename):
         # add config path to python paths
-        path = Path(self.filename).resolve().parent
+        path = Path(filename).resolve().parent
         sys.path.insert(0, str(path))
 
         # load yaml
