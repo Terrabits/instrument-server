@@ -7,8 +7,6 @@ class Parser(object):
     def append(self, data):
         self.data += data
         self.data = self.data.lstrip()
-    def is_data(self):
-        return bool(self.buffer)
     def next_command(self):
         if not self.data:
             return b''
