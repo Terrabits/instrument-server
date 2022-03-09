@@ -13,6 +13,8 @@ def create_handler(server):
         handler = server.new_connection()
         while True:
             data = await reader.read(1024)
+            if not data:
+                break
             await handler.handle_read(data, send_fn)
         writer.close()
     return handler
