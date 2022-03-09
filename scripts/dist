@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
+
+
+# exit on error
+set -e
+
+
+cd "$ROOT_DIR"
+
+
+# get latest distributables
+BDIST_FILE="$(ls -1 dist/*.whl    | tail -n 1)"
+SDIST_FILE="$(ls -1 dist/*.tar.gz | tail -n 1)"
+
+# prompt to upload
+echo source distribution:
+echo "  $SDIST_FILE"
+echo binary distribution:
+echo "  $BDIST_FILE"
+# are you sure? [Yy=yes]
+# see: https://stackoverflow.com/a/1885534
+read -p "Upload to PyPi? " -n 1 -r  # read one character
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+  [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1 # handle exits from shell or function but don't exit interactive shell
+fi
+
+# upload
+PRINT="-p"
+SILENT="-s"
+read $PRINT "Enter your username: "         USERNAME
+read $PRINT "Enter your password: " $SILENT PASSWORD
+echo
+twine upload -u "$USERNAME" -p "$PASSWORD" "$BDIST_FILE"
+twine upload -u "$USERNAME" -p "$PASSWORD" "$SDIST_FILE"
