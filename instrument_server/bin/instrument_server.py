@@ -7,10 +7,10 @@ import sys
 def main():
     parser = argparse.ArgumentParser(description='TCP server for controlling multiple instruments via a simplified SCPI interface')
     parser.add_argument('config_filename')
-    parser.add_argument('--address',     '-a', type=str, default='0.0.0.0')
-    parser.add_argument('--port',        '-p', type=int, default=None)
-    parser.add_argument('--termination', '-t', type=str, default='\n')
-    parser.add_argument('--debug-mode',  '-d', action='store_true')
+    parser.add_argument('--address',     '-a', type=str, default='0.0.0.0', help='Set listening address. Default: 0.0.0.0')
+    parser.add_argument('--port',        '-p', type=int, default=None,      help='Set listening port. Default: random')
+    parser.add_argument('--termination', '-t', type=str, default='\n',      help='Set the termination character. Default: "\\n"')
+    parser.add_argument('--debug-mode',  '-d', action='store_true',         help='print debug info to stdout')
     args = parser.parse_args()
     args.termination = args.termination.encode()
 
