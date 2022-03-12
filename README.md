@@ -1,34 +1,53 @@
-# instrument Server
+# Instrument Server
 
-TCP server for controlling multiple instruments via a simplified SCPI interface
+Instrument Server is a framework for creating Test & Measurement (T&M) application microservices.
 
 ## Requirements
 
-- python 3.7+
-- `ddt` testing package
-- `ruamel.yaml` yaml parser package
+- `python` ~= 3.7
+- `ruamel.yaml` ~= 0.15.85
+- `pyvisa` ~= 1.9.1
 
-## Install Requirements
+## Install
 
-To get started:
+Instrument Server is available on PyPi:
 
-```shell
-# git clone instrument-server
-cd path/to/instrument-server
-pip install .
-```
+[instrument-server](https://pypi.org/project/instrument-server/)
 
-Or, alternatively, for development:
+It can be installed as expected via pip:
 
 ```shell
-cd path/to/instrument-server
-pip install -e .[dev]
+pip install instrument-server
 ```
 
-## Start Server
+## Command Line Interface
 
-A command line command `instrument-server` is installed on your system. See `instrument-server --help` for details.
+The `instrument-server` python package provides a Command Line Interface (CLI) for starting and stopping Instrument Servers.
 
-## Example
+From `--help`:
 
-See `doc/example` for a simple example to help get started.
+```comment
+usage: instrument-server [-h] [--address ADDRESS] [--port PORT]
+                         [--termination TERMINATION] [--debug-mode]
+                         config_filename
+
+Command Line Interface for starting Instrument Server microservices
+
+positional arguments:
+  config_filename
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --address ADDRESS, -a ADDRESS
+                        Set listening address. Default: 0.0.0.0
+  --port PORT, -p PORT  Set listening port. Default: random
+  --termination TERMINATION, -t TERMINATION
+                        Set the termination character. Default: "\n"
+  --debug-mode, -d      print debug info to stdout
+```
+
+## Hello World
+
+For a quick introduction to creating `instrument-server` microservices, see:
+
+[Instrument Server Hello World](https://github.com/Terrabits/instrument-server-hello-world)
