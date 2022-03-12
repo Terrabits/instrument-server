@@ -4,8 +4,13 @@ from   pathlib import Path
 import instrument_server
 import sys
 
+
+# constants
+DESCRIPTION="Command Line Interface for starting Instrument Server microservices"
+
+
 def main():
-    parser = argparse.ArgumentParser(description='TCP server for controlling multiple instruments via a simplified SCPI interface')
+    parser = argparse.ArgumentParser(description=DESCRIPTION)
     parser.add_argument('config_filename')
     parser.add_argument('--address',     '-a', type=str, default='0.0.0.0', help='Set listening address. Default: 0.0.0.0')
     parser.add_argument('--port',        '-p', type=int, default=None,      help='Set listening port. Default: random')
