@@ -4,7 +4,7 @@ import re
 def parser_error(command, message, received_command):
     received_command =      received_command.strip()
     command_msg      = f' ({received_command})' if received_command else ''
-    return CommandError(f"{self.command} error: {message}{command_msg}")
+    return CommandError(f"{command} error: {message}{command_msg}")
 
 class ParserMixin(object):
     def __init__(self, command, args={}):
