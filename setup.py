@@ -6,7 +6,7 @@ description='TCP server for controlling multiple instruments with a simplified S
 
 setup(
     name='instrument-server',
-    version='1.3.8',
+    version='1.3.9',
     description=description,
     long_description=description,
     author='Nick Lalic',
