@@ -3,4 +3,4 @@ SET ROOT_DIR=%~dp0..
 
 
 setlocal
-cd %ROOT_DIR%
+cd /D "%ROOT_DIR%"
