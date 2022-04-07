@@ -1,5 +1,6 @@
-from   ..command import CommandError
+from   instrument_server.errors import CommandError
 import re
+
 
 def parser_error(command, message, received_command):
     received_command =      received_command.strip()

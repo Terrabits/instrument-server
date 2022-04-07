@@ -1,4 +1,6 @@
-from instrument_server.command import Base, CommandError
+from instrument_server.command import Base
+from instrument_server.errors  import CommandError
+
 
 # replaces {arg}
 # with kwargs_dict[arg]

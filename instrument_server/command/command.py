@@ -2,8 +2,6 @@ from   .delay_plugin import DelayPlugin
 from   importlib     import import_module
 from   pathlib       import Path
 
-class CommandError(Exception):
-    pass
 
 def register_plugin(module, config={}):
     try:

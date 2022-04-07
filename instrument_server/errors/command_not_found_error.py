@@ -1,0 +1,2 @@
+class CommandNotFoundError(LookupError):
+    pass

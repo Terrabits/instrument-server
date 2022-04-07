@@ -1,9 +1,11 @@
-from   instrument_server.command  import CommandError
-from   instrument_server.device   import DeviceError
-from   instrument_server.executor import CommandNotFoundError, Executor
-from   instrument_server.parser   import Parser
+from .errors   import CommandError, CommandNotFoundError, DeviceError
+from .executor import Executor
+from .parser   import Parser
 
-known_exceptions = (CommandError, DeviceError, CommandNotFoundError)
+
+# constants
+known_exceptions = (CommandError, CommandNotFoundError, DeviceError)
+
 
 class Server:
     def __init__(self, config, termination=b'\n', debug_mode=False):
@@ -15,6 +17,7 @@ class Server:
 
     def new_connection(self):
         return Handler(self.executor, self.termination, self.debug_mode)
+
 
 class Handler:
     def __init__(self, executor, termination=b'\n', debug_mode=False):

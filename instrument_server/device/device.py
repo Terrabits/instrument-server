@@ -1,8 +1,6 @@
 from importlib import import_module
 from pathlib   import Path
 
-class DeviceError(Exception):
-    pass
 
 def register_plugin(module):
     try:

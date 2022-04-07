@@ -6,8 +6,6 @@ from   pathlib                   import Path
 from   ruamel                    import yaml
 import sys
 
-class CommandNotFoundError(LookupError):
-    pass
 
 class Executor(object):
     def __init__(self, config, debug_mode=False):
