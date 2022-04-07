@@ -1,3 +1,4 @@
-from instrument_server.command.base        import Base
-from instrument_server.command.command     import is_plugin, plugins, register_plugin, remove_plugin
-from instrument_server.command.translation import Translation
+from .base           import Base
+from .command        import is_plugin, plugins, register_plugin, remove_plugin
+from .parsed_command import ParsedCommand
+from .translation    import Translation
