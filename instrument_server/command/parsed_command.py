@@ -1,4 +1,4 @@
-from .mixin import ParserMixin
+from .mixin import parser_error, ParserMixin
 
 
 class ParsedCommand(ParserMixin):
@@ -12,6 +12,9 @@ class ParsedCommand(ParserMixin):
         self.settings = settings
 
     def execute(self,  received_command):
+        # for raise_error
+        self.received_command = received_command
+
         # run code, return result
         args = self.args(received_command)
         return self.code(args)
@@ -19,6 +22,10 @@ class ParsedCommand(ParserMixin):
     def code(self, args):
         """code to execute command"""
         pass
+
+    def raise_error(self, message):
+        """raises CommandError"""
+        parser_error(self.COMMAND, message, self.received_command)
 
 
 # # export
