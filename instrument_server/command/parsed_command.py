@@ -12,7 +12,9 @@ class ParsedCommand(ParserMixin):
         self.settings = settings
 
     def execute(self,  received_command):
-        self.code(self.args(received_command))
+        # run code, return result
+        args = self.args(received_command)
+        return self.code(args)
 
     def code(self, args):
         """code to execute command"""
