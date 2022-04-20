@@ -14,6 +14,7 @@ class QuitCommand(BasicCommand):
 
     # implementation
     def code(self, devices, args):
+        print('goodbye')
         sys.exit(0)
 
 
