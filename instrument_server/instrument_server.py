@@ -1,39 +1,53 @@
-from   .server import Server
+from   .application import Application
+from   .client      import Client
+from   .helpers     import is_ipv4
 import asyncio
-from   asyncio import start_server
-from   socket  import AddressFamily
+from   asyncio      import start_server
 
-def ipv4_sockets_from(sockets):
-    return [i for i in sockets if i.family != AddressFamily.AF_INET6]
 
-def create_handler(server):
-    async def handler(reader, writer):
-        async def send_fn(data):
-            writer.write(data)
-        handler = server.new_connection()
-        while True:
-            data = await reader.read(1024)
-            if not data:
-                break
-            await handler.handle_read(data, send_fn)
-        writer.close()
-    return handler
+# constants
+BUFFER_SIZE  = 1024
 
-def run(address='0.0.0.0', port=None, *args, **kwargs):
-    async def main():
-        server       = Server(*args, **kwargs)
-        handler      = create_handler(server)
-        tcp_server   = await start_server(handler, address, port)
-        ipv4_sockets = ipv4_sockets_from(tcp_server.sockets)
-        if ipv4_sockets:
-            _addr, _port = tcp_server.sockets[0].getsockname()
-            print(f'Running on {_addr}:{_port}...')
+
+class InstrumentServer:
+    def __init__(self, plugins, devices):
+        self.plugins     = plugins
+        self.devices     = devices
+        self.server      = None
+        self.application = Application(plugins, devices)
+
+    async def serve_forever(self, address, port):
+        with self.application:
+            await self.start_server_and_serve_forever(address, port)
+
+    def run(self, address, port):
+        """starts a new tcp server and serves forever (blocking)"""
+        asyncio.run(self.serve_forever(address, port))
+
+
+    # helpers
+
+    def print_server_status(self):
+        socket = self.server.sockets[0]
+        if is_ipv4(socket):
+            # print IPv6
+            address, port = socket.getsockname()
+            print(f'Running on {address}:{port}...')
         else:
-            sockname = tcp_server.sockets[0].getsockname()
-            print(f'Running on {sockname}')
-        async with tcp_server:
-            await tcp_server.serve_forever()
-    try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        pass
+            # print IPv6
+            print(f'Running on {socket.getsockname()}...')
+
+    async def handle_new_client(reader, writer):
+        client = Client(self.application, writer.write)
+        while data := await reader.read(BUFFER_SIZE):
+            await client.receive(data)
+
+    async def start_server(self, address, port):
+        """returns a new asyncio tcp server coroutine"""
+        server = self.server = await start_server(self.handle_new_client, address, port)
+        self.print_server_status()
+        return server
+
+    async def start_server_and_serve_forever(self, address, port):
+        server = await self.start_server(address, port)
+        await server.serve_forever()

@@ -1,19 +1,19 @@
 from setuptools import find_packages, setup
 
 
-description='TCP server for controlling multiple instruments with a simplified SCPI interface'
+description='A tool for creating Test and Measurement microservices'
 
 
 setup(
     name='instrument-server',
-    version='1.4.0',
+    version='2.0.0',
     description=description,
     long_description=description,
     author='Nick Lalic',
     author_email='nick.lalic@gmail.com',
     url='https://github.com/Terrabits/instrument-server',
     py_modules=['instrument_server'],
-    packages=find_packages(exclude=['test']),
+    packages=find_packages(exclude=['tests']),
     install_requires=['ruamel.yaml>=0.15.85<1.0', 'pyvisa>=1.9.1<2.0'],
     extras_require={
     'dev':  ['ddt>=1.2.0<2.0', 'twine>=3.8.0', 'wheel>=0.37.1'],
@@ -43,15 +43,15 @@ setup(
         'Intended Audience :: Developers',
         'Topic :: Scientific/Engineering',
 
-        # Pick your license as you wish (should match "license" above)
+        # Rohde & Schwarz Royalty-Free products license
         'License :: Other/Proprietary License',
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7'
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
     ],
     entry_points={
     'console_scripts': [

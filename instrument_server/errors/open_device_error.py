@@ -1,0 +1,2 @@
+class OpenDeviceError(Exception):
+    pass
