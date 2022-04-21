@@ -1,6 +1,6 @@
-from instrument_server.commands       import ErrorsCommand
-from instrument_server.plugin_manager import PluginManager
-from instrument_server.errors         import CommandNotFoundError, OpenDeviceError
+from ..commands       import ErrorsCommand
+from ..plugin_manager import PluginManager
+from ..errors         import CommandNotFoundError, OpenDeviceError
 
 
 class Application:
@@ -18,6 +18,11 @@ class Application:
         # add error handling
         errors_command = ErrorsCommand(self.errors)
         self.commands.append(errors_command)
+
+        # built-ins
+        plugins.append('instrument_server.commands.quit_command')
+        plugins.append('instrument_server.devices.socket_factory')
+        plugins.append('instrument_server.devices.visa_factory')
 
         # start
         self.load_plugins(plugins)
