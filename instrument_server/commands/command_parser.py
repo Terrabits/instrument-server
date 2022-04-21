@@ -16,9 +16,9 @@ class CommandParser(RaiseErrorMixin):
     def parse_args(self, command_bytes):
         values = command_bytes.strip().split()[1:]
         if len(values) < len(self.args):
-            self.raise_error('Too few arguments')
+            self.raise_error('too few arguments')
         if len(values) > len(self.args):
-            self.raise_error('Too many arguments')
+            self.raise_error('too many arguments')
 
         args = {}
         for name, type, value in zip(self.args.keys(), self.args.values(), values):
@@ -26,7 +26,7 @@ class CommandParser(RaiseErrorMixin):
                 try:
                     typed_value = type(value)
                 except (TypeError, ValueError) as ex:
-                    self.raise_error(f"'{value}' is not a valid {type}")
+                    self.raise_error(f"'{value}' could not be converted to {type}")
                 args[name] = typed_value
             else:
                 # decode bytes to str

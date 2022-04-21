@@ -39,10 +39,10 @@ class InstrumentServer:
             # print IPv6
             print(f'Running on {socket.getsockname()}...')
 
-    async def handle_new_client(reader, writer):
+    async def handle_new_client(self, reader, writer):
         client = Client(self.application, writer.write)
         while data := await reader.read(BUFFER_SIZE):
-            await client.receive(data)
+            client.receive(data)
 
     async def start_server(self, address, port):
         """returns a new asyncio tcp server coroutine"""

@@ -16,7 +16,7 @@ class DeviceFactoryPluginManager:
 
         # already registered?
         if plugin in self.plugins:
-            message = f"plugin {plugin} is already registered"
+            message = f"device plugin {plugin} is already registered"
             raise PluginError(message)
 
         # register

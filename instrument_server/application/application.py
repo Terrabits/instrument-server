@@ -1,3 +1,4 @@
+from .helpers         import ellipsis_bytes
 from ..commands       import ErrorsCommand
 from ..plugin_manager import PluginManager
 from ..errors         import CommandNotFoundError, OpenDeviceError
@@ -48,11 +49,13 @@ class Application:
                     # execute and return result
                     return command.execute(self.devices, command_bytes)
                 except Exception as error:
+                    # log error
                     print(error)
                     self.errors.append(error)
+                    return
 
-        # no match
-        message = f'Definition not found for {command_bytes}'
+        # no matching command
+        message = f"command '{ellipsis_bytes(command_bytes)}' not found"
         error   = CommandNotFoundError(message)
         print(error)
         self.errors.append(error)

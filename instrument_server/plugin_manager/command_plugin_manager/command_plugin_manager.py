@@ -16,7 +16,7 @@ class CommandPluginManager:
 
         # already registered?
         if plugin in self.plugins:
-            message = f"plugin {plugin} is already registered"
+            message = f"command plugin {plugin} is already registered"
             raise PluginError(message)
 
         # register

@@ -7,10 +7,7 @@ import unittest
 @ddt
 class TestApplication(unittest.TestCase):
     def test_basic_application(self):
-        plugins = [
-            'instrument_server.devices.socket_factory',
-            'instrument_server.commands.quit_command' ]
-
+        plugins = []
         devices = {
             'instr': {
                 'type':    'socket',

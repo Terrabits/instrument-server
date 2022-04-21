@@ -9,8 +9,8 @@ class QuitCommand(BasicCommand):
     """
 
     # definition
-    COMMAND = 'quit'
-    ARGS    = {}
+    command = 'quit'
+    args    = {}
 
     # implementation
     def code(self, devices, args):

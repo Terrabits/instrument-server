@@ -1,5 +1,5 @@
-from .command_parser          import CommandParser
-from .helpers                 import to_bytes
+from .command_parser import CommandParser
+from .helpers        import to_bytes
 
 
 class Client:
