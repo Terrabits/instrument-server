@@ -22,8 +22,10 @@ class InstrumentServer:
 
     def run(self, address, port):
         """starts a new tcp server and serves forever (blocking)"""
-        asyncio.run(self.serve_forever(address, port))
-
+        try:
+            asyncio.run(self.serve_forever(address, port))
+        except KeyboardInterrupt:
+            pass
 
     # helpers
 
