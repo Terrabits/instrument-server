@@ -1,7 +1,8 @@
+from   .helpers            import description_for, prog_for
 from   ..instrument_server import InstrumentServer
 from   ..yaml              import load_yaml
-from   .helpers            import description_for, prog_for
 import argparse
+import os
 import sys
 
 
@@ -32,6 +33,10 @@ def main(app_name, plugins=None, devices=None):
     if not isinstance(devices, dict):
         message = 'devices must be dict of device declarations'
         raise TypeError(message)
+
+    # import plugins from the
+    # current working directory
+    sys.path.insert(0, os.getcwd())
 
     # run
     server = InstrumentServer(plugins, devices)
