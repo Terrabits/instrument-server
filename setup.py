@@ -16,9 +16,9 @@ setup(
     packages=find_packages(exclude=['tests']),
     install_requires=['ruamel.yaml>=0.15.85<1.0', 'pyvisa>=1.9.1<2.0'],
     extras_require={
-    'dev':  ['ddt>=1.2.0<2.0', 'twine>=3.8.0', 'wheel>=0.37.1'],
-    'dist': ['twine>=3.8.0', 'wheel>=0.37.1'],
-    'test': ['ddt>=1.2.0<2.0']
+        'dev':  ['ddt>=1.2.0<2.0', 'twine>=3.8.0', 'wheel>=0.37.1'],
+        'dist': ['twine>=3.8.0', 'wheel>=0.37.1'],
+        'test': ['ddt>=1.2.0<2.0']
     },
     license='R&S Terms and Conditions for Royalty-Free Products',
     zip_safe=False,
