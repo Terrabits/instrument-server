@@ -1,7 +1,10 @@
+# constants
+TERM_CHAR = b'\n'
+
+
 class CommandParser:
-    def __init__(self, initial_data=b'', term_char=b'\n'):
+    def __init__(self, initial_data=b''):
         self.data        = initial_data.lstrip()
-        self.term_char = term_char
 
     def receive(self, data):
         self.data += data
@@ -12,8 +15,8 @@ class CommandParser:
         if not self.data:
             return None
 
-        # term_char?
-        i = self.data.find(self.term_char)
+        # term char?
+        i = self.data.find(TERM_CHAR)
         if i == -1:
             return None
 

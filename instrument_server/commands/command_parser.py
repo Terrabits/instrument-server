@@ -23,9 +23,9 @@ class CommandParser(RaiseErrorMixin):
         args = {}
         for name, type, value in zip(self.args.keys(), self.args.values(), values):
             if type:
-                try:
+                try:  # type(arg), catch Exception
                     typed_value = type(value)
-                except (TypeError, ValueError) as ex:
+                except Exception:
                     self.raise_error(f"'{value}' could not be converted to {type}")
                 args[name] = typed_value
             else:

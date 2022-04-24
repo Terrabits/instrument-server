@@ -26,7 +26,7 @@ class SocketFactory(DeviceFactoryBase):
         device = socket()
 
         # open and return
-        try:
+        try:  # socket.connect, catch Exception
             device.connect((address, port))
         except Exception as error:
             device.close()

@@ -27,9 +27,9 @@ class Application:
 
         # start
         self.load_plugins(plugins)
-        try:
+        try:  # open devices, catch BaseException
             self.open_devices(devices)
-        except Exception as error:
+        except BaseException as error:
             self.close_devices()
             raise error
 
@@ -45,19 +45,18 @@ class Application:
     def execute(self, command_bytes):
         for command in self.commands:
             if command.is_match(command_bytes):
-                try:
-                    # execute and return result
+                try:  # execute command, catch Exception
                     return command.execute(self.devices, command_bytes)
                 except Exception as error:
-                    # log error
-                    print(error)
+                    # log non-exiting error
+                    print(error, flush=True)
                     self.errors.append(error)
                     return
 
-        # no matching command
+        # error: command not found
         message = f"command '{ellipsis_bytes(command_bytes)}' not found"
         error   = CommandNotFoundError(message)
-        print(error)
+        print(error, flush=True)
         self.errors.append(error)
 
     # helpers
