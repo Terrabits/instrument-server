@@ -14,33 +14,21 @@ class Application:
         # init app state
         self.devices      = {}
         self.device_types = {}
-        self.errors       = []  # TODO: fix error queue
+        self.errors       = []
 
         # add error handling
         errors_command = ErrorsCommand(self.errors)
         self.commands.append(errors_command)
 
-        # built-ins
+        # add built-ins
+        plugins = plugins.copy()
         plugins.append('instrument_server.commands.quit_command')
         plugins.append('instrument_server.devices.socket_factory')
         plugins.append('instrument_server.devices.visa_factory')
 
         # start
         self.load_plugins(plugins)
-        try:  # open devices, catch BaseException
-            self.open_devices(devices)
-        except BaseException as error:
-            self.close_devices()
-            raise error
-
-    def __del__(self):
-        self.close_devices()
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.close_devices()
+        self.open_devices(devices)
 
     def execute(self, command_bytes):
         for command in self.commands:
@@ -58,6 +46,10 @@ class Application:
         error   = CommandNotFoundError(message)
         print(error, flush=True)
         self.errors.append(error)
+
+    def close(self):
+        self.close_devices()
+
 
     # helpers
 
@@ -79,17 +71,28 @@ class Application:
         for name, settings in devices.items():
             if 'type' not in settings:
                 self.close_devices()
-                message = f"type not found for device {name}"
+
+                message = f"type not found for device '{name}'"
                 raise OpenDeviceError(message)
 
             # type, factory
-            type    = settings.pop('type')
-            factory = self.device_factories[type]
+            device_type = settings.pop('type')
+            factory     = self.device_factories[device_type]
 
-            # open and save
-            device                  = factory.open(**settings)
-            self.devices[name]      = device
-            self.device_types[name] = type
+            # open
+            try:
+                device = factory.open(**settings)
+            except BaseException as error:
+                self.close_devices()
+
+                # reraise
+                message = f'{type(error)} error: {error}'
+                new_error = OpenDeviceError(message)
+                raise new_error from error
+
+            # save
+            self.devices     [name] = device
+            self.device_types[name] = device_type
 
     def close_devices(self):
         for name, device in self.devices.items():
@@ -99,7 +102,3 @@ class Application:
 
             # close
             factory.close(device)
-
-        # clear all devices
-        self.devices.clear()
-        self.device_types.clear()
