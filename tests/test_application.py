@@ -37,7 +37,7 @@ class TestApplication(unittest.TestCase):
         errors = app.execute(b'errors?')
 
         # should be no errors
-        self.assertEqual(errors, '[]')
+        self.assertEqual(errors, b'[]')
 
         # generate error
         app.execute(b'missing-command')
