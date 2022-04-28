@@ -1,4 +1,3 @@
-from   .mixins        import ErrorQueueMixin
 from   .basic_command import BasicCommand
 import json
 
