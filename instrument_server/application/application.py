@@ -1,4 +1,4 @@
-from .helpers         import ellipsis_bytes
+from .helpers         import ellipsis_bytes, to_bytes
 from ..commands       import ErrorsCommand
 from ..plugin_manager import PluginManager
 from ..errors         import CommandNotFoundError, OpenDeviceError
@@ -31,15 +31,19 @@ class Application:
         self.open_devices(devices)
 
     def execute(self, command_bytes):
+        assert isinstance(command_bytes, bytes)
         for command in self.commands:
-            if command.is_match(command_bytes):
-                try:  # execute command, catch Exception
-                    return command.execute(self.devices, command_bytes)
-                except Exception as error:
-                    # log non-exiting error
-                    print(error, flush=True)
-                    self.errors.append(error)
-                    return
+            if not command.is_match(command_bytes):
+                continue
+
+            try:
+                result = command.execute(self.devices, command_bytes)
+                return to_bytes(result)
+            except Exception as error:
+                # convert exceptions to errors
+                print(error, flush=True)
+                self.errors.append(error)
+                return
 
         # error: command not found
         message = f"command '{ellipsis_bytes(command_bytes)}' not found"
