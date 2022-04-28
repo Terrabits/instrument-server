@@ -1,5 +1,7 @@
-from socket import AddressFamily
+from asyncio import all_tasks
 
 
-def is_ipv4(socket):
-    return socket.family == AddressFamily.AF_INET
+
+def no_clients_running():
+    # this should be the only task
+    return len(all_tasks()) == 1
