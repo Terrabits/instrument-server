@@ -6,7 +6,7 @@ description='A tool for creating Test and Measurement microservices'
 
 setup(
     name='instrument-server',
-    version='2.1.1',
+    version='2.1.2',
     description=description,
     long_description=description,
     author='Nick Lalic',
