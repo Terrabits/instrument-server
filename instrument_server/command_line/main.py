@@ -10,7 +10,7 @@ def main(app_name, plugins=None, devices=None):
     """Instrument Server Application Command Line Interface"""
     parser = argparse.ArgumentParser(prog=prog_for(app_name), description=description_for(app_name))
     parser.add_argument('--address', '-a', type=str, default='0.0.0.0', help='Listening address. Default: 0.0.0.0')
-    parser.add_argument('--port',    '-p', type=int, default=9000,      help='Listening port. Default: 9000')
+    parser.add_argument('--port',    '-p', type=int, default=9001,      help='Listening port. Default: 9001')
     if plugins is None:
         parser.add_argument('plugins_list_file', type=load_yaml, help='Plugins list file (yaml)')
     if devices is None:
